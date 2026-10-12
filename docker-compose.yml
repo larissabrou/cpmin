@@ -1,0 +1,66 @@
+# Déploiement Coolify (Build Pack : Docker Compose)
+# Les variables SERVICE_* sont générées automatiquement par Coolify.
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SERVICE_FQDN_APP_8080
+      - APP_NAME=${APP_NAME:-AggregPay}
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_KEY=${APP_KEY:?}
+      - APP_URL=${SERVICE_FQDN_APP}
+      - LOG_CHANNEL=stderr
+
+      - DB_CONNECTION=mariadb
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-cpmin}
+      - DB_USERNAME=${SERVICE_USER_MARIADB}
+      - DB_PASSWORD=${SERVICE_PASSWORD_MARIADB}
+
+      - SESSION_DRIVER=database
+      - CACHE_STORE=database
+      - QUEUE_CONNECTION=database
+
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
+      - MAIL_FROM_NAME=${APP_NAME:-AggregPay}
+      - AUTH_EMAIL_2FA=${AUTH_EMAIL_2FA:-true}
+
+      - AGGREGPAY_GATEWAY_URL=${AGGREGPAY_GATEWAY_URL}
+      - AGGREGPAY_API_KEY=${AGGREGPAY_API_KEY}
+      - AGGREGPAY_WEBHOOK_URL=${AGGREGPAY_WEBHOOK_URL}
+      - AGGREGPAY_WEBHOOK_SECRET=${AGGREGPAY_WEBHOOK_SECRET}
+      - PORTAL_PROVISION_SECRET=${PORTAL_PROVISION_SECRET}
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      - MARIADB_DATABASE=${DB_DATABASE:-cpmin}
+      - MARIADB_USER=${SERVICE_USER_MARIADB}
+      - MARIADB_PASSWORD=${SERVICE_PASSWORD_MARIADB}
+      - MARIADB_ROOT_PASSWORD=${SERVICE_PASSWORD_MARIADBROOT}
+    volumes:
+      - db-data:/var/lib/mysql
+      # Les fichiers .sql de ce dossier (sur le serveur) sont importés
+      # automatiquement au tout premier démarrage, quand la base est vide.
+      - /data/cpmin/mariadb-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:

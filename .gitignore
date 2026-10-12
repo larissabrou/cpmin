@@ -24,3 +24,7 @@ Homestead.yaml
 Thumbs.db
 
 /.claude
+
+# Dumps de base de données (données personnelles, repo public)
+*.sql
+*.sql.gz
