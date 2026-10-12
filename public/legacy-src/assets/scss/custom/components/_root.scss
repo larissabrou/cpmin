@@ -1,0 +1,129 @@
+// 
+// root.scss
+//
+
+@mixin color-mode($mode: light, $root: false) {
+    @if $color-mode-type =="media-query" {
+        @if $root ==true {
+            @media (prefers-color-scheme: $mode) {
+                :root {
+                    @content;
+                }
+            }
+        }
+
+        @else {
+            @media (prefers-color-scheme: $mode) {
+                @content;
+            }
+        }
+    }
+
+    @else {
+        [data-bs-theme="#{$mode}"] {
+            @content;
+        }
+    }
+}
+
+//theme-light
+:root,
+[data-bs-theme="light"] {
+    --#{$prefix}header-bg: #{$header-bg};
+    --#{$prefix}header-item-color: #{$header-item-color};
+
+
+    --#{$prefix}text-muted: #959396;
+
+    // Vertical Sidebar - Default Light
+    --#{$prefix}sidebar-bg: #ffffff;
+    --#{$prefix}sidebar-border-color: #e9ebef;
+    --#{$prefix}sidebar-menu-item-color: #7b8190;
+    --#{$prefix}sidebar-menu-sub-item-color: #7b8190;
+    --#{$prefix}sidebar-menu-item-icon-color: #7b8190;
+    --#{$prefix}sidebar-menu-item-hover-color: #383c40;
+    --#{$prefix}sidebar-menu-item-active-color: #776acf;
+    --#{$prefix}sidebar-menu-sub-item-active-color: #383c40;
+    --#{$prefix}sidebar-menu-item-active-bg-color: #eeedf9;
+
+    --#{$prefix}topbar-search-bg: #f8f7fc;
+
+    --#{$prefix}header-dark-bg: radial-gradient(at 50% -20%, #3f1e59, #311748) fixed;
+    --#{$prefix}header-dark-item-color: #e9ecef;
+
+    // Footer
+    --#{$prefix}footer-bg: #ffffff;
+    --#{$prefix}footer-color: #74788d;
+
+    // Horizontal nav
+    --#{$prefix}topnav-bg: #fff;
+    --#{$prefix}menu-item-color: #7b8190;
+    --#{$prefix}menu-item-active-color: #776acf;
+    --#{$prefix}topnav-dark-bg: #03314D;
+    --#{$prefix}menu-dark-item-color: rgba(255, 255, 255, 0.5);
+    --#{$prefix}menu-item-active-border-color: #776acf;
+    --#{$prefix}menu-dark-item-hover-color: #ffffff;
+    --#{$prefix}menu-dark-item-active-color: #fff;
+
+    // Brand 
+    --#{$prefix}navbar-brand-box-bg: #ffffff;
+
+    // Boxed layout width
+    --#{$prefix}boxed-body-bg:#e9e5eb;
+
+    // apex charts
+    --#{$prefix}apex-grid-color: #f8f9fa;
+
+    [data-sidebar="dark"] {
+        --#{$prefix}sidebar-dark-bg: #24243c;
+        --#{$prefix}sidebar-dark-menu-item-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-sub-item-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-item-icon-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-item-hover-color: #d8d8df;
+        --#{$prefix}sidebar-dark-menu-item-active-color: #d8d8df;
+        --#{$prefix}sidebar-dark-menu-item-active-bg-color: #2c2c45;
+    }
+}
+
+//theme dark
+@if $enable-dark-mode {
+    @include color-mode(dark, true) {
+        --#{$prefix}light: #{$light-dark};
+        --#{$prefix}light-rgb: #{to-rgb($light-dark)};
+        --#{$prefix}dark: #{$light-dark};
+        --#{$prefix}dark-rgb: #{to-rgb($light-dark)};
+
+        --#{$prefix}text-muted: #858592;
+
+        --#{$prefix}header-dark-bg: #{$header-dark-bg};
+        --#{$prefix}header-item-color: #{$header-item-color-dark};
+
+        --#{$prefix}top-tagbar-bg: #{$top-tagbar-bg-dark};
+        --#{$prefix}header-item-sub-color: #{$text-muted};
+
+        // Brand 
+        --#{$prefix}navbar-brand-box-bg: #24243c;
+
+
+        [data-topbar="dark"] {
+            --#{$prefix}header-dark-bg:                 radial-gradient(at 50% -20%, #24243c, #222236) fixed;
+            --#{$prefix}header-dark-item-color:         #e9ecef;
+        }
+
+        // Footer
+        --#{$prefix}footer-bg: #24243c;
+        --#{$prefix}footer-color: #d8d8df;
+
+        // Vertical Sidebar - Dark
+        --#{$prefix}sidebar-dark-bg: #24243c;
+        --#{$prefix}sidebar-dark-menu-item-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-sub-item-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-item-icon-color: #9292a9;
+        --#{$prefix}sidebar-dark-menu-item-hover-color: #d8d8df;
+        --#{$prefix}sidebar-dark-menu-item-active-color: #d8d8df;
+        --#{$prefix}sidebar-dark-menu-item-active-bg-color: #2c2c45;
+
+        --#{$prefix}boxed-body-bg: #14142b;
+
+    }
+}

@@ -1,0 +1,25 @@
+.portal-api-field .form-control[readonly] {
+    background-color: #f8f9fa;
+    cursor: default;
+}
+
+.portal-api-field code {
+    font-size: 0.85em;
+}
+
+.portal-api-curl {
+    position: relative;
+    background: #1e2139;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    overflow: auto;
+    margin-bottom: 0;
+}
+
+.portal-api-curl-copy {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}

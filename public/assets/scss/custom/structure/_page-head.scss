@@ -1,0 +1,39 @@
+// 
+// Page-title
+// 
+
+.page-title-box {
+    padding: calc(#{$grid-gutter-width} + 12px) 0px $grid-gutter-width 0px;
+
+    .page-title-right {
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+
+            .breadcrumb-item {
+                &.page-head {
+                    a {
+                        color: rgba($white, 0.5);
+                    }
+
+                    &.active {
+                        color: $white !important;
+                    }
+                }
+            }
+        }
+    }
+
+    h4 {
+        font-size: 18px !important;
+        &.sub-title{
+            color: $white;
+        }
+    }
+
+    .page-title-right {
+        @media (max-width: 575.98px) {
+            display: none;
+        }
+    }
+}
