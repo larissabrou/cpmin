@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Derrière le reverse proxy de Coolify (Traefik) : URLs en https
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'company' => EnsureCompanyContext::class,
             'password.changed' => EnsurePasswordChanged::class,
